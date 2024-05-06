@@ -6,9 +6,9 @@ The Housing Sales King County project aims to develop a machine learning model (
 
 King County, located in the state of Washington, offers a diverse real estate landscape characterized by a blend of urban sophistication and natural beauty. The county encompasses vibrant urban centers, such as Seattle, alongside tranquil suburban and rural communities.
 
-<center>
+<p align="center">
 <img src="https://github.com/guilhermegarcia-ai/ml-regression-models/assets/62107649/5f314ba7-e8ea-4427-ab82-ba63ad569adb" width=600 height=300>
-</center>
+</p>
 
 ## The Objective
 
