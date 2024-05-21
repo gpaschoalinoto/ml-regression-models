@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>House Pricing</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="./static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Housing Sales King County Prediction Project</h1>
+        {% if result %}
+        <h3>Predict value: {{result}}$</h3>
+        <a href="/">Predict again</a>
+        {% endif %}
+        {% if result == None %}
+        <form action = "/predict" method = "POST">
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col">
+                        <label>Total number of bedrooms</label>
+                        <input type="number" step = "1" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1 to 9" min="1" max="9" required>
+                    </div>
+                    <div class="col">
+                        <label>Total number of bathrooms</label>
+                        <input type="number" step = "1" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1 to 6" min="1" max="6" required>
+                    </div>
+                    <div class="col">
+                        <label>Square footage of house</label>
+                        <input type="number" step = "100" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 400 to 10k" min="400" max="10000" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col">
+                        <label>Square footage of lot</label>
+                        <input type="number" step = "1000" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 700 to 500k" min="700" max="500000" required>
+                    </div>
+                    <div class="col">
+                        <label>Total number of floors</label>
+                        <input type="number" step = "any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1 to 4" min="1" max="4" required>
+                    </div>
+                    <div class="col">
+                        <label>Is Waterfront?</label>
+                        <select class="form-control form-control-sm" name="new_house" required>
+                            <option value="0">0</option>
+                            <option value="0">1</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>Overall condition (1 Bad - 5 New)</label>
+                        <select class="form-control form-control-sm" name="new_house" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col">
+                        <label>Square footage of basement</label>
+                        <input type="number" step = "1000" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 0 to 500k" min="0" max="500000" required>
+                    </div>
+                    <div class="col">
+                        <label>Year built</label>
+                        <input type="number" step = "1" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1900  to 2015" min="1900" max="2015" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col">
+                        <label>Year renovated</label>
+                        <input type="number" step = "any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1900 to 2015" min="1900" max="2015" required>
+                    </div>
+                    <div class="col">
+                        <label>ZIP</label>
+                        <input type="number" step = "any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 98001 to 98199" min="98001" max="98199" required>
+                    </div>
+                    <div class="col">
+                        <label>Latitude</label>
+                        <input type="number" step = "any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 47.18900 to 47.77800" min="4718900" max="4777800" required>
+                    </div>
+                    <div class="col">
+                        <label>Longitude</label>
+                        <input type="number" step = "any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: -122.514798 to -121.698246" min="-122.514798" max="-121.698246" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col">
+                        <label>Average square footage of neighboring houses</label>
+                        <input type="number" step = "500" class="form-control form-control-sm" name="new_house" placeholder="Average square footage: 800 to 6k" min="800" max="6000" required>
+                    </div>
+                    <div class="col">
+                        <label>Average square footage of neighboring lots</label>
+                        <input type="number" step = "1000" class="form-control form-control-sm" name="new_house" placeholder="Average square footage: 800 to 220k" min="800" max="220000" required>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Predict</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+
+</html>
