@@ -1,11 +1,59 @@
-.container {
-    padding-top: 5%;
+/* styles.css */
+
+/* Custom styles */
+h1, h2, h3, h4, h5, h6 { font-family: "Oswald"; }
+body { font-family: "Open Sans"; }
+
+/* Slideshow container */
+.slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
 }
 
-h1 {
-    margin-bottom: 1rem;
+/* Prefixing all slideshow styles */
+.slideshow-container .text {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
 }
 
-label {
-    font-size: 80%;
+.slideshow-container .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+.slideshow-container .dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.slideshow-container .active {
+    background-color: #717171;
+}
+
+.slideshow-container .fade {
+    animation-name: fade;
+    animation-duration: 4.9s;
+}
+
+@keyframes fade {
+    from { opacity: .2; } 
+    to { opacity: 1; }
+}
+
+@media only screen and (max-width: 300px) {
+    .slideshow-container .text { font-size: 11px; }
 }

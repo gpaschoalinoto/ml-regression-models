@@ -1,122 +1,262 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
+    <title>Housing Sales</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>House Pricing</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="./static/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body>
-    <div class="container">
-        <h1>Housing Sales King County Prediction Project</h1>
-        {% if result %}
-        <h3>Predict value: {{result}}$</h3>
-        <a href="/">Predict again</a>
-        {% endif %}
-        {% if result == None %}
-        <form action = "/predict" method = "POST">
+<body class="w3-light-grey">
 
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col">
-                        <label>Total number of bedrooms</label>
-                        <input type="number" step = "1" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1 to 9" min="1" max="9" required>
-                    </div>
-                    <div class="col">
-                        <label>Total number of bathrooms</label>
-                        <input type="number" step = "1" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1 to 6" min="1" max="6" required>
-                    </div>
-                    <div class="col">
-                        <label>Square footage of house</label>
-                        <input type="number" step = "100" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 400 to 10k" min="400" max="10000" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col">
-                        <label>Square footage of lot</label>
-                        <input type="number" step = "1000" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 700 to 500k" min="700" max="500000" required>
-                    </div>
-                    <div class="col">
-                        <label>Total number of floors</label>
-                        <input type="number" step = "any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1 to 4" min="1" max="4" required>
-                    </div>
-                    <div class="col">
-                        <label>Is Waterfront?</label>
-                        <select class="form-control form-control-sm" name="new_house" required>
-                            <option value="0">0</option>
-                            <option value="0">1</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label>Overall condition (1 Bad - 5 New)</label>
-                        <select class="form-control form-control-sm" name="new_house" required>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col">
-                        <label>Square footage of basement</label>
-                        <input type="number" step = "1000" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 0 to 500k" min="0" max="500000" required>
-                    </div>
-                    <div class="col">
-                        <label>Year built</label>
-                        <input type="number" step = "1" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1900  to 2015" min="1900" max="2015" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col">
-                        <label>Year renovated</label>
-                        <input type="number" step = "any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1900 to 2015" min="1900" max="2015" required>
-                    </div>
-                    <div class="col">
-                        <label>ZIP</label>
-                        <input type="number" step = "any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 98001 to 98199" min="98001" max="98199" required>
-                    </div>
-                    <div class="col">
-                        <label>Latitude</label>
-                        <input type="number" step = "any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 47.18900 to 47.77800" min="4718900" max="4777800" required>
-                    </div>
-                    <div class="col">
-                        <label>Longitude</label>
-                        <input type="number" step = "any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: -122.514798 to -121.698246" min="-122.514798" max="-121.698246" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="col">
-                        <label>Average square footage of neighboring houses</label>
-                        <input type="number" step = "500" class="form-control form-control-sm" name="new_house" placeholder="Average square footage: 800 to 6k" min="800" max="6000" required>
-                    </div>
-                    <div class="col">
-                        <label>Average square footage of neighboring lots</label>
-                        <input type="number" step = "1000" class="form-control form-control-sm" name="new_house" placeholder="Average square footage: 800 to 220k" min="800" max="220000" required>
-                    </div>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Predict</button>
-        </form>
-        {% endif %}
+    <!-- Navigation bar with social media icons -->
+    <div class="w3-bar w3-black w3-hide-small">
+        <a href="https://linkedin.com/in/guilhermegpaschoalinoto" class="w3-bar-item w3-button"><i class="fa fa-linkedin"></i></a>
+        <a href="https://github.com/guilhermegarcia-ai" class="w3-bar-item w3-button"><i class="fa fa-github"></i></a>
     </div>
-</body>
 
+    <!-- Header Container for fixed size centered content -->
+    <div class="w3-content" style="max-width:1920px; color:white; background-image: url('https://res.cloudinary.com/sagacity/image/upload/c_crop,h_667,w_1000,x_0,y_0/c_limit,dpr_auto,f_auto,fl_lossy,q_80,w_1080/bellevue_fall_lnb6qm.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <!-- Title & Subtitle-->
+        <header class="w3-container w3-center w3-padding-48" style="background: rgba(0, 0, 0, 0.5);">
+            <h1 class="w3-xxxlarge"><b>HOUSING SALES PREDICTOR</b></h1>
+            <h4>Machine Learning Project  <span class="w3-tag w3-red">KING COUNTY</span></h4>
+        </header>
+    </div>
+
+    <!-- About the Project -->
+    <div class="w3-container" id="about">
+        <div class="w3-content" style="max-width:1000px">
+            <h4 class="w3-center w3-padding-32"><span class="w3-tag w3-wide">ABOUT THE PROJECT</span></h4>
+            <p>King County, located in the state of Washington, offers a diverse real estate landscape characterized by a blend of urban sophistication and natural beauty. The county encompasses vibrant urban centers, such as Seattle, alongside tranquil suburban and rural communities.</p>
+            <p>The primary objective of this project is to develop a robust regression model capable of accurately predicting house prices in King County. By analyzing historical sales data and identifying significant characteristics, the model aims to provide valuable insights into the factors driving property prices in the region.</p>
+        </div>
+    </div>
+
+    <!-- Slideshow House Price Images -->
+    <div class="slideshow-container">
+        <center>
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 4</div>
+                <img src="{{ url_for('static', filename='images/house1_$849999.png') }}" width="985" height="450">
+                <div class="text">8045 Wallingford Avenue N, Seattle, WA 98103</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 4</div>
+                <img src="{{ url_for('static', filename='images/house2_$399000.png') }}" width="985" height="450">
+                <div class="text">2706 Westlake Avenue N UNIT 76, Seattle, WA 98109</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 4</div>
+                <img src="{{ url_for('static', filename='images/house3_$850000.png') }}" width="985" height="450">
+                <div class="text">16005 239th Avenue SE, Issaquah, WA 98027</div>
+            </div>
+        
+            <div class="mySlides fade">
+                <div class="numbertext">4 / 4</div>
+                <img src="{{ url_for('static', filename='images/house4_$2685000.png') }}" width="985" height="450">
+                <div class="text">4551 135th Place SE, Bellevue, WA 98006</div>
+            </div>
+        </center>
+    </div>
+    <br>
+    <!-- Dots of Slideshow -->
+    <div style="text-align:center">
+        <span class="dot"></span> 
+        <span class="dot"></span> 
+        <span class="dot"></span> 
+        <span class="dot"></span>
+    </div>
+
+    <script>
+      let slideIndex = 0;
+      showSlides();
+      
+      function showSlides() {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}    
+        for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+        setTimeout(showSlides, 5000); // Change image every 5 seconds
+      }
+      </script>
+
+    <!-- Housing Sales Predictor Introduction -->
+    <div class="w3-container" id="introduction-prediction">
+      <div class="w3-content" style="max-width:1000px">
+          <p>The houses above are located in King County and are currently for sale. Their respective prices can be seen on the right. </p>
+          <br><br>
+          <h4 class="w3-center"><span class="w3-tag w3-wide">HOME SALE CALCULATOR</span></h4>
+          <br>
+          <p><h3>Find out below what your property is <span class="w3-tag w3-red">worth.</span></h3></p>
+          <p> The Housing Sales Predictor estimates how much money you can make selling your home.</p>
+      </div>
+  </div>
+
+    <!-- Form -->
+    <div class="container" style="max-width: 1200px; border-radius: 15px; padding: 20px; background-color: white;">
+        <div class="w3-white w3-padding-16 w3-round">
+            <form id="predictForm">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Total number of bedrooms</label>
+                            <input type="number" step="1" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1 to 9" min="1" max="9" required>
+                        </div>
+                        <div class="col">
+                            <label>Total number of bathrooms</label>
+                            <input type="number" step="1" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1 to 6" min="1" max="6" required>
+                        </div>
+                        <div class="col">
+                            <label>Square footage of house</label>
+                            <input type="number" step="100" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 400 to 10k" min="400" max="10000" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Square footage of lot</label>
+                            <input type="number" step="1000" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 700 to 500k" min="700" max="500000" required>
+                        </div>
+                        <div class="col">
+                            <label>Total number of floors</label>
+                            <input type="number" step="any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1 to 4" min="1" max="4" required>
+                        </div>
+                        <div class="col">
+                            <label>Waterfront view</label>
+                            <select class="form-control form-control-sm" name="new_house" required>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label>Overall condition (1 Bad - 5 New)</label>
+                            <select class="form-control form-control-sm" name="new_house" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Square footage of basement</label>
+                            <input type="number" step="1000" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 0 to 500k" min="0" max="500000" required>
+                        </div>
+                        <div class="col">
+                            <label>Year built</label>
+                            <input type="number" step="1" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1900 to 2015" min="1900" max="2015" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Year renovated</label>
+                            <input type="number" step="any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 1900 to 2015" min="1900" max="2015" required>
+                        </div>
+                        <div class="col">
+                            <label>ZIP</label>
+                            <input type="number" step="any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 98001 to 98199" min="98001" max="98199" required>
+                        </div>
+                        <div class="col">
+                            <label>Latitude</label>
+                            <input type="number" step="any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: 47.18900 to 47.77800" min="47.18900" max="47.77800" required>
+                        </div>
+                        <div class="col">
+                            <label>Longitude</label>
+                            <input type="number" step="any" class="form-control form-control-sm" name="new_house" placeholder="Possible values: -122.514798 to -121.698246" min="-122.514798" max="-121.698246" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Average square footage of neighboring houses</label>
+                            <input type="number" step="500" class="form-control form-control-sm" name="new_house" placeholder="Average square footage: 800 to 6k" min="800" max="6000" required>
+                        </div>
+                        <div class="col">
+                            <label>Average square footage of neighboring lots</label>
+                            <input type="number" step="1000" class="form-control form-control-sm" name="new_house" placeholder="Average square footage: 800 to 220k" min="800" max="220000" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Choose model -->
+                <div class="form-group">
+                    <label for="model">Choose model</label>
+                    <select class="form-control form-control-sm" name="model" required>
+                        <option value="random_forest">Random Forest</option>
+                        <option value="lgbm">LightGBM</option>
+                        <option value="compare_both_models">Compare Both Models</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w3-red">Predict</button>
+            </form>
+            <div id="result" class="w3-margin-top"></div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#predictForm').on('submit', function(event){
+                event.preventDefault();
+                $.ajax({
+                    url: '/predict',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response){
+                        if (response.prediction) {
+                            $('#result').html('<br> <h3> ESTIMATED SELLING PRICE: ' + '<span class="w3-tag w3-red">' + response.prediction + '</span> </h3>');
+                        } else if (response.prediction_lgbm && response.prediction_rf) {
+                            $('#result').html('<br> <h3> ESTIMATED SELLING PRICE (Random Forest): ' + '<span class="w3-tag w3-red">' + response.prediction_rf + '</span> </h3>' +
+                                                '<h3> ESTIMATED SELLING PRICE (LGBM): ' + '<span class="w3-tag w3-red">' + response.prediction_lgbm + '</span> </h3>'
+                                             );
+                        } else if (response.error) {
+                            $('#result').html('<h3>Error: ' + response.error + '</h3>');
+                        }
+                    },
+                    error: function(xhr, status, error){
+                        console.error(xhr);
+                        $('#result').html('<h3>An error occurred</h3>');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="w3-container w3-black" style="padding:5px">
+        <a href="#" class="w3-button w3-dark-gray w3-padding-small w3-margin-bottom"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+        <p>Developed by <a href="https://linkedin.com/in/guilhermegpaschoalinoto" target="_blank">linkedin.com/in/guilhermegpaschoalinoto.</a></p>
+    </footer>
+</body>
 </html>
